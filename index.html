@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <title>Погода</title>
+  </head>
+  <body>
+
+
+    <header class="header">
+      <h1 class="title">Прогноз погоды</h1>
+      <form class="form" action="#">
+        <input class="input" type="text" placeholder="Введите название города" required>
+        <button class="btn">Показать</button>
+      </form>
+    </header>
+
+    <div class="card">
+      <h2 class="card-city">London <span>GB</span></h2>
+      <div class="card-weather">
+        <div class="card-value">11<sup>°c</sup></div>
+        <img class="card-img" src="/src/img/example.png" alt="">
+      </div>
+      <div class="card-descr">Cloud</div>
+    </div>
+
+    <footer class="footer">
+      Погода
+    </footer>
+
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
