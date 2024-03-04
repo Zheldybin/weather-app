@@ -7,4 +7,4 @@
   </div>
   <div class="card-descr">${p(r,c)}</div>
   </div>
-  `;u.insertAdjacentHTML("afterend",s)}const L=async t=>{try{const e=await i(t),n={name:e.location.name,country:e.location.country,temp:e.current.temp_c,text:e.current.condition.text,code:e.current.condition.code,isDay:e.current.is_day,icon:e.current.condition.icon};return a(),w(n),e}catch(e){a(),g(e.message)}};h.addEventListener("submit",async function(t){t.preventDefault();let e=v.value.trim();const n=`http://api.weatherapi.com/v1/current.json?key=${y}&q=${e}`;L(n)});
+  `;u.insertAdjacentHTML("afterend",s)}const L=async t=>{try{const e=await i(t),n={name:e.location.name,country:e.location.country,temp:e.current.temp_c,text:e.current.condition.text,code:e.current.condition.code,isDay:e.current.is_day,icon:e.current.condition.icon};return a(),w(n),e}catch(e){a(),g(e.message)}};h.addEventListener("submit",async function(t){t.preventDefault();let e=v.value.trim();const n=`https://api.weatherapi.com/v1/current.json?key=${y}&q=${e}`;L(n)});
