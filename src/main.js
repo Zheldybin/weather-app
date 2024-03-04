@@ -59,6 +59,6 @@ const fetchWeather = async (url) => {
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
   let city = input.value.trim();
-  const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
+  const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
   fetchWeather(url);
 });
