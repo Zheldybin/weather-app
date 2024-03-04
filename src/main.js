@@ -1,58 +1,64 @@
-import '/src/style/style.css'
+import "/src/style/style.css";
+import { GET } from "./services/request";
+import { getTranslates, translate } from "./translate-api";
 
-const apiKey = '5c9ee4132816460883d92445240403';
-const form = document.querySelector('.form');
-const input = document.querySelector('.input');
-const header = document.querySelector('.header');
+const apiKey = "5c9ee4132816460883d92445240403";
+const form = document.querySelector(".form");
+const input = document.querySelector(".input");
+const header = document.querySelector(".header");
 
-function removeCard(){
-  const prevCard = document.querySelector('.card');
-  if(prevCard) prevCard.remove();
+(async function () {
+  await getTranslates();
+})();
+
+function removeCard() {
+  const prevCard = document.querySelector(".card");
+  if (prevCard) prevCard.remove();
 }
 
-function showError(){
-  const html = `<div class="card">Такого города нет<div>`
-  header.insertAdjacentHTML('afterend', html);
+function showError(error) {
+  const html = `<div class="card">${error}<div>`;
+  header.insertAdjacentHTML("afterend", html);
 }
 
-function showCard(name, country, temp, text){
+function showCard({ name, country, temp, icon, code, isDay }) {
   const html = `
   <div class="card">
   <h2 class="card-city">${name}<span>${country}</span></h2>
   <div class="card-weather">
     <div class="card-value">${temp}<sup>°c</sup></div>
-    <img class="card-img" src="/src/img/example.png" alt="">
+    <img class="card-img" src=${icon} alt="">
   </div>
-  <div class="card-descr">${text}</div>
+  <div class="card-descr">${translate(code, isDay)}</div>
   </div>
-  `
-  header.insertAdjacentHTML('afterend', html);
+  `;
+  header.insertAdjacentHTML("afterend", html);
 }
 
-async function fetchWeather (url) {
-  try{
-    const responce = await fetch(url);
-    const weatherObj = await responce.json();
+const fetchWeather = async (url) => {
+  try {
+    const response = await GET(url);
+    const params = {
+      name: response.location.name,
+      country: response.location.country,
+      temp: response.current.temp_c,
+      text: response.current.condition.text,
+      code: response.current.condition.code,
+      isDay: response.current.is_day,
+      icon: response.current.condition.icon,
+    };
     removeCard();
-    showCard(weatherObj.location.name, weatherObj.location.country, weatherObj.current.temp_c, weatherObj.current.condition.text);
-  }
-  catch(e){
+    showCard(params);
+    return response;
+  } catch (e) {
     removeCard();
-    showError();
+    showError(e.message);
   }
-}
+};
 
-form.addEventListener('submit', async function (event) {
+form.addEventListener("submit", async function (event) {
   event.preventDefault();
   let city = input.value.trim();
   const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
-  await condition();
-  await fetchWeather(url);
-})
-
-async function condition(){
-  const responce = await fetch('https://www.weatherapi.com/docs/conditions.json');
-  const lengObj = await responce.json();
-  console.log(lengObj)
-  
-}
+  fetchWeather(url);
+});
